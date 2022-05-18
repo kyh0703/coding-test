@@ -1,6 +1,7 @@
 def solution(s):
     answer = 0
-    number_dic = {"zero" : 0, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "seven": 7, "eight": 8, "nine": 9}
+    number_dic = {"zero": 0, "one": 1, "two": 2, "three": 3, "four": 4,
+                  "five": 5, "six": 6, "seven": 7, "eight": 8, "nine": 9}
     pos = 0
     number_list = []
     for i in range(len(s)):
@@ -14,7 +15,8 @@ def solution(s):
     answer = int("".join(number_list))
     return answer
 
-print(solution("one4seveneight"	))
+
+print(solution("one4seveneight"))
 
 """
 def solution(s):
