@@ -1,19 +1,34 @@
 def solution(N, stages):
     answer = []
-    calculate = dict()
+    stages_dict = dict()
+    calculate_dict = dict()
+    for stage in stages:
+        stages_dict[stage] = stages_dict.get(stage, 0) + 1
+
     for n in range(1, N + 1):
+        removes = []
         stop = 0
-        total = len(stages)
-        for stage in stages[:]:
+        total = sum(stages_dict.values())
+        for stage, count in stages_dict.items():
             if stage <= n:
-                stop += 1
-                stages.remove(stage)
-        print(n, stop/(total) * 100)
-        calculate[n] = stop/(total) * 100
+                stop += count
+                removes.append(stage)
+        for remove in removes:
+            stages_dict.pop(remove)
+        if stop == 0 and total == 0:
+            calculate_dict[n] = 0
+        else:
+            calculate_dict[n] = stop/(total)
+
+    calculate_dict = sorted(calculate_dict.items(),
+                            key=lambda x: x[1], reverse=True)
+    for key, _ in calculate_dict:
+        answer.append(key)
+
     return answer
 
 
-print("answer: ", solution(5, [2, 1, 2, 6, 2, 4, 3, 3]))
+print("answer: ", solution(5, [2, 2, 2, 2, 2]))
 # , [3, 4, 2, 1, 5]
 """
 입출력 예 #1
