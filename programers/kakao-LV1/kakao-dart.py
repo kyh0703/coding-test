@@ -1,46 +1,60 @@
 import re
 
 
+# def solution(dartResult):
+#     answer = 0
+#     count = 0
+#     calculate = dict()
+#     while len(dartResult) != 0:
+#         score = 0
+
+#         regex = re.match('[0-9]{1,2}', dartResult)
+#         if regex != None:
+#             score = int(dartResult[regex.start(): regex.end()])
+#             dartResult = dartResult[regex.end():]
+
+#         regex = re.match('^[SDT]', dartResult)
+#         if regex != None:
+#             area = dartResult[regex.start(): regex.end()]
+#             dartResult = dartResult[regex.end():]
+#             if area == 'S':
+#                 score = score ** 1
+#             elif area == 'D':
+#                 score = score ** 2
+#             elif area == 'T':
+#                 score = score ** 3
+#         calculate[count] = score
+
+#         regex = re.match('^[\*\#]', dartResult)
+#         if regex != None:
+#             star = dartResult[regex.start(): regex.end()]
+#             dartResult = dartResult[regex.end():]
+#             if star == '*':
+#                 if count != 0:
+#                     calculate[count - 1] = (calculate.get(count-1, 0) * 2)
+#                 calculate[count] = (calculate.get(count, 0) * 2)
+#             elif star == '#':
+#                 calculate[count] = (calculate.get(count, 0) * -1)
+#         count += 1
+
+#     print(calculate)
+#     for _, v in calculate.items():
+#         answer += v
+
+#     return answer
+
+
 def solution(dartResult):
-    answer = 0
-    count = 0
-    calculate = dict()
-    while len(dartResult) != 0:
-        score = 0
-
-        regex = re.match('[0-9]{1,2}', dartResult)
-        if regex != None:
-            score = int(dartResult[regex.start(): regex.end()])
-            dartResult = dartResult[regex.end():]
-
-        regex = re.match('^[SDT]', dartResult)
-        if regex != None:
-            area = dartResult[regex.start(): regex.end()]
-            dartResult = dartResult[regex.end():]
-            if area == 'S':
-                score = score ** 1
-            elif area == 'D':
-                score = score ** 2
-            elif area == 'T':
-                score = score ** 3
-        calculate[count] = score
-
-        regex = re.match('^[\*\#]', dartResult)
-        if regex != None:
-            star = dartResult[regex.start(): regex.end()]
-            dartResult = dartResult[regex.end():]
-            if star == '*':
-                if count != 0:
-                    calculate[count - 1] = (calculate.get(count-1, 0) * 2)
-                calculate[count] = (calculate.get(count, 0) * 2)
-            elif star == '#':
-                calculate[count] = (calculate.get(count, 0) * -1)
-        count += 1
-
-    print(calculate)
-    for _, v in calculate.items():
-        answer += v
-
+    bonus = {'S': 1, 'D': 2, 'T': 3}
+    option = {'': 1, '*': 2, '#': -1}
+    p = re.compile('([0-9]+)([SDT])([*#]?)')
+    dart = p.findall(dartResult)
+    print("dart", dart)
+    for i in range(len(dart)):
+        if dart[i][2] == '*' and i > 0:
+            dart[i-1] *= 2
+        dart[i] = int(dart[i][0]) ** bonus[dart[i][1]] * option[dart[i][2]]
+    answer = sum(dart)
     return answer
 
 
@@ -79,7 +93,7 @@ Single(S), Double(D), Triple(T)은 점수마다 하나씩 존재한다.
 def solution(dartResult):
     bonus = {'S': 1, 'D': 2, 'T': 3}
     option = {'': 1, '*': 2, '#': -1}
-    p = re.compile('(\d+)([SDT])([*#]?)')
+    p = re.compile('([0-9]+)([SDT])([*#]?)')
     dart = p.findall(dartResult)
     print("dart", dart)
     for i in range(len(dart)):
