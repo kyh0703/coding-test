@@ -1,15 +1,55 @@
-import math
+array = []
 
-class Point2D:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
 
-p1 = Point2D(x=1, y=3)    # 점1
-p2 = Point2D(x=1, y=1)    # 점2
+def solution(home):
+    pos_y = 1
+    pos_x = 1
 
-a = p2.x - p1.x    # 선 a의 길이
-b = p2.y - p1.y    # 선 b의 길이
+    while True:
+        next_x = home[pos_y][pos_x + 1]
+        if next_x == 0:
+            home[pos_y][pos_x] = 9
+            pos_x += 1
+            continue
+        elif next_x == 2:
+            home[pos_y][pos_x] = 9
+            home[pos_y][pos_x + 1] = 9
+            break
 
-c = math.sqrt((a * a) + (b * b))    # (a * a) + (b * b)의 제곱근을 구함
-print(c)    # 42.42640687119285
+        next_y = home[pos_y + 1][pos_x]
+        if next_y == 0:
+            home[pos_y][pos_x] = 9
+            pos_y += 1
+            continue
+        elif next_y == 2:
+            home[pos_y][pos_x] = 9
+            home[pos_y + 1][pos_x] = 9
+            break
+
+        if next_x == 1 and next_y == 1:
+            break
+
+    for i in home:
+        for j in i:
+            print(j, end=' ')
+        print()
+
+for i in range(10):
+    array.append(list(map(int, input().split())))
+
+solution(array)
+
+
+
+# ant_home = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+#             [1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
+#             [1, 0, 0, 1, 1, 1, 0, 0, 0, 1],
+#             [1, 0, 0, 0, 0, 0, 0, 1, 0, 1],
+#             [1, 0, 0, 0, 0, 0, 0, 1, 0, 1],
+#             [1, 0, 0, 0, 0, 1, 0, 1, 0, 1],
+#             [1, 0, 0, 0, 0, 1, 2, 1, 0, 1],
+#             [1, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+#             [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+#             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
+
+# print(solution(ant_home))

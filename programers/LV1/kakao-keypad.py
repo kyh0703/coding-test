@@ -1,38 +1,50 @@
 import math
 
+LEFT = 0
+CENTER = 1
+RIGHT = 2
+
+
 def solution(numbers, hand):
     answer = ''
     dial = [['1', '4', '7', '*'], ['2', '5', '8', '0'], ['3', '6', '9', '#']]
-    left_pos = [0, dial[0].index("*")]
-    right_pos = [2, dial[2].index("#")]
+    left_pos = [LEFT, dial[LEFT].index("*")]
+    right_pos = [RIGHT, dial[RIGHT].index("#")]
+
     for number in str(numbers):
-        if number in dial[0]:
-            col = dial[0].index(number)
-            left_pos = [0, col]
+        if number in dial[LEFT]:
+            col = dial[LEFT].index(number)
+            left_pos = [LEFT, col]
             answer += 'L'
-        elif number in dial[2]:
-            col = dial[2].index(number)
-            right_pos = [2, col]
+        elif number in dial[RIGHT]:
+            col = dial[RIGHT].index(number)
+            right_pos = [RIGHT, col]
             answer += 'R'
-        elif number in dial[1]:
-            col = dial[1].index(number)
-            left_distance = math.sqrt((left_pos[0] - 1) ** 2 + (left_pos[1] - col) ** 2)
-            right_distance = math.sqrt((right_pos[0] - 1) ** 2 + (right_pos[1] - col) ** 2)
+        elif number in dial[CENTER]:
+            col = dial[CENTER].index(number)
+            lx, ly = left_pos[0], left_pos[1]
+            rx, ry = right_pos[0], right_pos[1]
+            # 유클리드가 아닌 맨하탄으로..
+            # left_distance = math.sqrt((lx - CENTER) ** 2 + (ly - col) ** 2)
+            # right_distance = math.sqrt((rx - CENTER) ** 2 + (ly - col) ** 2)
+            left_distance = abs(lx - CENTER) + abs(ly - col)
+            right_distance = abs(rx - CENTER) + abs(ry - col)
             if hand == "right":
                 if left_distance < right_distance:
-                    left_pos = [1, col]
+                    left_pos = [CENTER, col]
                     answer += 'L'
                 else:
-                    right_pos = [1, col]
+                    right_pos = [CENTER, col]
                     answer += 'R'
             elif hand == "left":
                 if right_distance < left_distance:
-                    right_pos = [1, col]
+                    right_pos = [CENTER, col]
                     answer += 'R'
                 else:
-                    left_pos = [1, col]
+                    left_pos = [CENTER, col]
                     answer += 'L'
     return answer
+
 
 print(solution([1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5], "right"))
 print(solution([7, 0, 8, 2, 8, 3, 1, 5, 7, 6, 2], "left"))
@@ -61,4 +73,47 @@ numbers	hand	result
 [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]	"right"	"LLRLLRLLRL"
 입출력 예에 대한 설명
 입출력 예 #1
+ """
+
+"""
+def solution(numbers, hand):
+    answer = ''
+    key_dict = {1: (0, 0), 2: (0, 1), 3: (0, 2),
+                4: (1, 0), 5: (1, 1), 6: (1, 2),
+                7: (2, 0), 8: (2, 1), 9: (2, 2),
+                '*': (3, 0), 0: (3, 1), '#': (3, 2)}
+
+    left = [1, 4, 7]
+    right = [3, 6, 9]
+    lhand = '*'
+    rhand = '#'
+    for i in numbers:
+        if i in left:
+            answer += 'L'
+            lhand = i
+        elif i in right:
+            answer += 'R'
+            rhand = i
+        else:
+            curPos = key_dict[i]
+            lPos = key_dict[lhand]
+            rPos = key_dict[rhand]
+            ldist = abs(curPos[0]-lPos[0]) + abs(curPos[1]-lPos[1])
+            rdist = abs(curPos[0]-rPos[0]) + abs(curPos[1]-rPos[1])
+
+            if ldist < rdist:
+                answer += 'L'
+                lhand = i
+            elif ldist > rdist:
+                answer += 'R'
+                rhand = i
+            else:
+                if hand == 'left':
+                    answer += 'L'
+                    lhand = i
+                else:
+                    answer += 'R'
+                    rhand = i
+
+    return answer
  """
