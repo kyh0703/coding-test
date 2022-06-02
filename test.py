@@ -1,55 +1,31 @@
-array = []
+def dfs(h, x, y) -> bool:
+    if x < 0 or x >= n or y < 0 or y >= n:
+        return False
+    if maps[x][y] <= h:
+        visited[x][y] = True
+        return False
+    if visited[x][y]:
+        return False
+    visited[x][y] = True
+    dfs(h, x - 1, y)
+    dfs(h, x + 1, y)
+    dfs(h, x, y - 1)
+    dfs(h, x, y + 1)
+    return True
 
 
-def solution(home):
-    pos_y = 1
-    pos_x = 1
+n = int(input())
+visited = [[False] * n for _ in range(n)]
+print(visited)
+maps = [[0, 0, 0, 0, 1], [0, 0, 0, 0, 1], [
+    0, 0, 0, 0, 1], [0, 0, 0, 0, 1], [0, 0, 0, 0, 1]]
+# for i in range(n):
+#     maps.append(list(map(int, input().split())))
 
-    while True:
-        next_x = home[pos_y][pos_x + 1]
-        if next_x == 0:
-            home[pos_y][pos_x] = 9
-            pos_x += 1
-            continue
-        elif next_x == 2:
-            home[pos_y][pos_x] = 9
-            home[pos_y][pos_x + 1] = 9
-            break
+count = 0
+for i in range(n):
+    for j in range(n):
+        if dfs(1, 0, 0):
+            count += 1
 
-        next_y = home[pos_y + 1][pos_x]
-        if next_y == 0:
-            home[pos_y][pos_x] = 9
-            pos_y += 1
-            continue
-        elif next_y == 2:
-            home[pos_y][pos_x] = 9
-            home[pos_y + 1][pos_x] = 9
-            break
-
-        if next_x == 1 and next_y == 1:
-            break
-
-    for i in home:
-        for j in i:
-            print(j, end=' ')
-        print()
-
-for i in range(10):
-    array.append(list(map(int, input().split())))
-
-solution(array)
-
-
-
-# ant_home = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-#             [1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
-#             [1, 0, 0, 1, 1, 1, 0, 0, 0, 1],
-#             [1, 0, 0, 0, 0, 0, 0, 1, 0, 1],
-#             [1, 0, 0, 0, 0, 0, 0, 1, 0, 1],
-#             [1, 0, 0, 0, 0, 1, 0, 1, 0, 1],
-#             [1, 0, 0, 0, 0, 1, 2, 1, 0, 1],
-#             [1, 0, 0, 0, 0, 1, 0, 0, 0, 1],
-#             [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-#             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
-
-# print(solution(ant_home))
+# print(count)
