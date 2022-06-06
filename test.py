@@ -1,31 +1,12 @@
-def dfs(h, x, y) -> bool:
-    if x < 0 or x >= n or y < 0 or y >= n:
-        return False
-    if maps[x][y] <= h:
-        visited[x][y] = True
-        return False
-    if visited[x][y]:
-        return False
-    visited[x][y] = True
-    dfs(h, x - 1, y)
-    dfs(h, x + 1, y)
-    dfs(h, x, y - 1)
-    dfs(h, x, y + 1)
-    return True
+def solution(numbers):
+    answer = []
+    for i in range(len(numbers)):
+        for j in range(i + 1, len(numbers)):
+            answer.append(numbers[i] + numbers[j])
+    answer = list(set(answer))
+    answer.sort()
+    return answer
 
 
-n = int(input())
-visited = [[False] * n for _ in range(n)]
-print(visited)
-maps = [[0, 0, 0, 0, 1], [0, 0, 0, 0, 1], [
-    0, 0, 0, 0, 1], [0, 0, 0, 0, 1], [0, 0, 0, 0, 1]]
-# for i in range(n):
-#     maps.append(list(map(int, input().split())))
-
-count = 0
-for i in range(n):
-    for j in range(n):
-        if dfs(1, 0, 0):
-            count += 1
-
-# print(count)
+print(solution([2, 1, 3, 4, 1]))
+print(solution([5, 0, 2, 7]))
