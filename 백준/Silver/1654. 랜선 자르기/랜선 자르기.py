@@ -11,10 +11,12 @@ mid = (low + high) // 2
 def is_possible(mid):
     return N <= sum(line // mid for line in lines)
 
+answer = 0
 while low <= high:
     if is_possible(mid):
         low = mid + 1
+        answer = mid
     else:
         high = mid - 1
     mid = (low + high) // 2
-print(high)
+print(answer)
