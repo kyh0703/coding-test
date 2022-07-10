@@ -14,10 +14,7 @@ def is_exist(target):
 answer = []
 own_cards.sort()
 for i in find_cards:
-    if is_exist(i):
-        answer.append(1)
-    else:
-        answer.append(0)
+    answer.append(1 if is_exist(i) else 0)
 
 for i in answer:
     print(i, end=' ')
