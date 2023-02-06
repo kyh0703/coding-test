@@ -14,7 +14,7 @@ for _ in range(T):
         if i == 'R':
             if len(nums) == 0:
                 continue
-            is_reverse = False if is_reverse else True
+            is_reverse = not is_reverse
         elif i == 'D':
             if len(nums) == 0:
                 is_error = True
