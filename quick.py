@@ -1,6 +1,5 @@
 arr = [5, 3, 8, 4, 9, 1, 6, 2, 7]
 
-
 def quick(arr):
     if len(arr) <= 1:
         return arr
