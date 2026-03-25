@@ -12,7 +12,7 @@ while (left < right) {
   if (sum === x) {
     count++
     left++
-    right++
+    right--
   } else if (sum < x) {
     left++
   } else {
